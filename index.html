@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="دودھ ریکارڈ"/>
+<meta name="theme-color" content="#1a3a2a"/>
+<title>دودھ ریکارڈ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green-dark: #1a3a2a;
+  --green-mid:  #2d6a4f;
+  --green-soft: #52b788;
+  --green-pale: #d8f3dc;
+  --green-bg:   #f0faf3;
+  --amber:      #e9a71a;
+  --amber-pale: #fff8e7;
+  --amber-dark: #7a5200;
+  --blue:       #1a6aad;
+  --blue-pale:  #e8f3ff;
+  --blue-dark:  #0b3a6a;
+  --ink:        #0f1f16;
+  --ink2:       #2c4a38;
+  --muted:      #6b8a78;
+  --border:     #c8e6d0;
+  --bg:         #f5fbf7;
+  --white:      #ffffff;
+  --radius-sm:  10px;
+  --radius-md:  16px;
+  --radius-lg:  22px;
+  --shadow-sm:  0 2px 8px rgba(26,58,42,0.08);
+  --shadow-md:  0 6px 24px rgba(26,58,42,0.13);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  font-family: 'Noto Nastaliq Urdu', 'Segoe UI', Tahoma, Arial, sans-serif;
+  color: var(--ink);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.hdr {
+  background: var(--green-dark);
+  padding: 18px 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.hdr-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.hdr-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--green-soft);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.brand-text h1 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.brand-text p {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 1px;
+}
+
+.dhodi-chip {
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 6px 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.dhodi-chip:active { background: rgba(255,255,255,0.22); }
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s, border-color 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.tab.on {
+  color: #fff;
+  border-bottom-color: var(--green-soft);
+}
+
+/* ── PAGES ── */
+.pg { padding: 18px; display: none; padding-bottom: 40px; }
+.pg.on { display: block; }
+
+/* ── INSTALL BANNER ── */
+.install-banner {
+  background: var(--amber-pale);
+  border: 1px solid #f0d080;
+  border-radius: var(--radius-md);
+  padding: 13px 15px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: var(--amber-dark);
+  line-height: 1.7;
+  display: none;
+  position: relative;
+}
+.install-banner strong { font-weight: 700; }
+.install-x {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #bba;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+/* ── PRICE ROW ── */
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--green-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 13px 16px;
+  margin-bottom: 16px;
+}
+
+.price-row label {
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.price-row label span { font-size: 16px; }
+
+.pinp {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+}
+.pinp em { font-size: 12px; color: var(--muted); font-style: normal; }
+.pinp input {
+  width: 60px;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  background: transparent;
+  font-family: inherit;
+  text-align: center;
+}
+
+/* ── DATE NAV ── */
+.dnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  background: var(--green-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+
+.dnav button {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 7px 13px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.dnav button:active { background: rgba(255,255,255,0.25); }
+
+.dnav .dlbl {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ── MILK CARDS ── */
+.milk-card {
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.milk-card.morning {
+  background: linear-gradient(135deg, #fffdf0 0%, #fff8e0 100%);
+  border-color: #f0d88a;
+}
+
+.milk-card.evening {
+  background: linear-gradient(135deg, #f0f6ff 0%, #e8f0ff 100%);
+  border-color: #b8cef0;
+}
+
+.card-hdr {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.morning .card-icon { background: #fde68a; }
+.evening .card-icon { background: #bfdbfe; }
+
+.card-hdr-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.card-hdr-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.qty-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.qty-label {
+  font-size: 12px;
+  color: var(--muted);
+  width: 50px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.qty-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.qty-box:focus-within {
+  border-color: var(--green-mid);
+}
+
+.qty-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  background: transparent;
+  font-family: inherit;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.qty-unit {
+  padding: 0 12px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  border-right: 1.5px solid #eee;
+}
+
+.note-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.note-row label { font-size: 12px; color: var(--muted); width: 50px; flex-shrink: 0; text-align: right; }
+
+.note-row input {
+  flex: 1;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--white);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.note-row input:focus { border-color: var(--green-mid); }
+
+/* ── PREVIEW BAR ── */
+.prev-bar {
+  background: var(--green-dark);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prev-bar .pside { }
+.prev-bar .pl { font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+.prev-bar .pv { font-size: 22px; font-weight: 700; color: #fff; }
+
+/* ── SAVE BUTTON ── */
+.sbtn {
+  width: 100%;
+  padding: 15px;
+  background: var(--green-mid);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(45,106,79,0.35);
+  transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+  letter-spacing: 0.02em;
+}
+.sbtn:active {
+  background: var(--green-dark);
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(45,106,79,0.25);
+}
+
+/* ── TOAST ── */
+.toast {
+  background: var(--ink);
+  color: #fff;
+  padding: 11px 22px;
+  border-radius: 30px;
+  font-size: 13px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+  margin: 12px 0 0;
+  pointer-events: none;
+  font-weight: 500;
+}
+.toast.show { opacity: 1; }
+
+/* ── WEEK NAV ── */
+.wk-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  background: var(--green-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+.wk-nav button {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  padding: 7px 13px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.wk-nav button:active { background: rgba(255,255,255,0.25); }
+.wk-nav .wlbl { font-size: 13px; font-weight: 700; color: #fff; }
+
+/* ── WEEK CARD ── */
+.wk-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+  background: var(--white);
+}
+
+.wk-top {
+  background: var(--green-dark);
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wk-top .wt { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; }
+.wk-top .wl { font-size: 24px; font-weight: 700; color: #fff; }
+.wk-top .wl span { font-size: 13px; font-weight: 400; opacity: 0.6; margin-right: 3px; }
+
+.col-hdr {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--green-bg);
+  border-bottom: 1px solid var(--border);
+}
+.col-hdr .chd { width: 48px; font-size: 10px; color: var(--muted); font-weight: 700; letter-spacing: 0.05em; }
+.col-hdr .chs { flex: 1; display: flex; gap: 4px; }
+.col-hdr .chs-item { flex: 1; text-align: center; font-size: 10px; color: var(--muted); font-weight: 700; letter-spacing: 0.05em; }
+.col-hdr .cht { width: 56px; text-align: left; font-size: 10px; color: var(--muted); font-weight: 700; letter-spacing: 0.05em; }
+
+.day-row {
+  display: flex;
+  align-items: center;
+  padding: 11px 16px;
+  border-bottom: 1px solid #f0f5f2;
+  transition: background 0.15s;
+}
+.day-row:last-child { border-bottom: none; }
+.day-row.today { background: #f5fff8; }
+.day-row .dname { width: 48px; font-size: 12px; color: var(--ink2); font-weight: 600; line-height: 1.4; }
+.day-row .ddate { font-size: 10px; color: var(--muted); font-weight: 400; }
+.day-row .slots { flex: 1; display: flex; gap: 4px; }
+
+.slot { flex: 1; text-align: center; }
+.slot .sv { font-size: 15px; font-weight: 700; color: var(--ink); }
+.slot .sl { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.slot .sbadge { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 6px; }
+.slot.morning-slot .sv { color: var(--amber-dark); }
+.slot.morning-slot .sbadge { background: var(--amber-pale); color: var(--amber-dark); }
+.slot.evening-slot .sv { color: var(--blue-dark); }
+.slot.evening-slot .sbadge { background: var(--blue-pale); color: var(--blue-dark); }
+.slot.mt .sv { color: #ccc; }
+
+.day-row .dtotal { width: 56px; text-align: left; font-size: 13px; font-weight: 700; color: var(--ink); }
+.day-row .dtotal.mt { color: #ccc; }
+
+.wk-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--green-bg);
+  border-top: 1px solid var(--border);
+}
+.wk-foot .fl { font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+.wk-foot .fv { font-size: 20px; font-weight: 700; color: var(--green-dark); }
+
+.paid-btn {
+  font-size: 12px;
+  padding: 9px 15px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--muted);
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+.paid-btn:active { opacity: 0.7; }
+.paid-btn.paid {
+  background: var(--green-pale);
+  color: var(--green-dark);
+  border-color: var(--green-soft);
+}
+
+/* ── SUMMARY ── */
+.sum-section-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sc {
+  border-radius: var(--radius-md);
+  padding: 15px;
+  border: 1px solid transparent;
+}
+.sc.green { background: var(--green-pale); border-color: #a8d8b8; }
+.sc.amber { background: var(--amber-pale); border-color: #f0d88a; }
+.sc.blue  { background: var(--blue-pale);  border-color: #b8cef0; }
+.sc.gray  { background: #f5f5f5;           border-color: #e0e0e0; }
+
+.sc .sl { font-size: 11px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+.sc .sv { font-size: 22px; font-weight: 700; color: var(--ink); line-height: 1; }
+.sc .ss { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+/* BARS */
+.bars-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.bars-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink2);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 110px;
+}
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.bar-col .bv { font-size: 9px; color: var(--muted); }
+.bar-col .bstack { width: 100%; display: flex; flex-direction: column; justify-content: flex-end; height: 86px; gap: 1px; border-radius: 0 0 3px 3px; }
+.bar-col .bm { background: var(--amber); border-radius: 3px 3px 0 0; min-height: 2px; }
+.bar-col .be { background: var(--blue); border-radius: 3px 3px 0 0; min-height: 2px; }
+.bar-col .bn { font-size: 10px; color: var(--muted); font-weight: 600; }
+.bar-col.today-col .bm { background: #2a9d6b; }
+.bar-col.today-col .be { background: #1a4aad; }
+
+.legend { display: flex; gap: 18px; margin-top: 13px; }
+.legend span { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.legend .dot { width: 10px; height: 10px; border-radius: 3px; }
+.dot-m { background: var(--amber); }
+.dot-e { background: var(--blue); }
+
+/* ── MODAL ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 30, 20, 0.55);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.overlay.show { display: flex; }
+
+.modal {
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  padding: 24px 18px 32px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-md);
+}
+
+.modal-handle {
+  width: 36px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 3px;
+  margin: 0 auto 20px;
+}
+
+.modal h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.modal-field {
+  margin-bottom: 12px;
+}
+.modal-field label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+.modal-field input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+  background: var(--green-bg);
+  color: var(--ink);
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.modal-field input:focus { border-color: var(--green-mid); }
+
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.modal-btns button {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.modal-btns button:active { opacity: 0.8; transform: scale(0.98); }
+.modal-btns .ok { background: var(--green-mid); color: #fff; }
+.modal-btns .cancel { background: #f0f0ec; color: var(--muted); }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 18px 0;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-brand">
+      <div class="brand-icon">🥛</div>
+      <div class="brand-text">
+        <h1>دودھ ریکارڈ</h1>
+        <p>روزانہ حساب کتاب</p>
+      </div>
+    </div>
+    <button class="dhodi-chip" id="dhodi-btn" onclick="openModal()">✏️ ڈھوڈی</button>
+  </div>
+  <div class="tabs">
+    <button class="tab on" id="tab-add" onclick="go('add')">آج درج کریں</button>
+    <button class="tab" id="tab-week" onclick="go('week')">ہفتہ وار</button>
+    <button class="tab" id="tab-sum" onclick="go('sum')">ماہانہ خلاصہ</button>
+  </div>
+</div>
+
+<!-- ADD PAGE -->
+<div class="pg on" id="pg-add">
+
+  <div id="install-banner" class="install-banner">
+    <button class="install-x" onclick="dismissBanner()">✕</button>
+    <strong>📲 ہوم اسکرین پر لگائیں:</strong><br>
+    Android Chrome: تین نقطے ⋮ ← Add to Home screen<br>
+    iPhone Safari: شیئر □↑ ← Add to Home Screen
+  </div>
+
+  <div class="price-row">
+    <label><span>🏷️</span> قیمت فی لیٹر</label>
+    <div class="pinp">
+      <em>PKR</em>
+      <input type="number" id="price-inp" value="120" min="1" step="1" inputmode="numeric" onchange="saveSettings();calcPreview()"/>
+    </div>
+  </div>
+
+  <div class="dnav">
+    <button onclick="shiftDay(-1)">◀ پچھلا</button>
+    <div class="dlbl" id="dlbl">—</div>
+    <button onclick="shiftDay(1)">اگلا ▶</button>
+  </div>
+
+  <!-- Morning -->
+  <div class="milk-card morning">
+    <div class="card-hdr">
+      <div class="card-icon">☀️</div>
+      <div>
+        <div class="card-hdr-text">صبح کا دودھ</div>
+        <div class="card-hdr-sub">فجر کے بعد</div>
+      </div>
+    </div>
+    <div class="qty-row">
+      <div class="qty-label">مقدار</div>
+      <div class="qty-box">
+        <input type="number" id="m-qty" placeholder="0.0" min="0" step="0.5" inputmode="decimal" oninput="calcPreview()"/>
+        <span class="qty-unit">لیٹر</span>
+      </div>
+    </div>
+    <div class="note-row">
+      <label>نوٹ</label>
+      <input type="text" id="m-note" placeholder="اختیاری — مثلاً بچھڑا پی گیا"/>
+    </div>
+  </div>
+
+  <!-- Evening -->
+  <div class="milk-card evening">
+    <div class="card-hdr">
+      <div class="card-icon">🌙</div>
+      <div>
+        <div class="card-hdr-text">شام کا دودھ</div>
+        <div class="card-hdr-sub">مغرب کے بعد</div>
+      </div>
+    </div>
+    <div class="qty-row">
+      <div class="qty-label">مقدار</div>
+      <div class="qty-box">
+        <input type="number" id="e-qty" placeholder="0.0" min="0" step="0.5" inputmode="decimal" oninput="calcPreview()"/>
+        <span class="qty-unit">لیٹر</span>
+      </div>
+    </div>
+    <div class="note-row">
+      <label>نوٹ</label>
+      <input type="text" id="e-note" placeholder="اختیاری"/>
+    </div>
+  </div>
+
+  <!-- Preview -->
+  <div class="prev-bar" id="prev-bar">
+    <div class="pside">
+      <div class="pl">آج کا کل دودھ</div>
+      <div class="pv" id="prev-qty">0 L</div>
+    </div>
+    <div style="width:1px;height:36px;background:rgba(255,255,255,0.2)"></div>
+    <div class="pside" style="text-align:left">
+      <div class="pl">رقم بنتی ہے</div>
+      <div class="pv" id="prev-pkr">PKR 0</div>
+    </div>
+  </div>
+
+  <button class="sbtn" onclick="saveDay()">💾 محفوظ کریں</button>
+  <div class="toast" id="t1"></div>
+</div>
+
+<!-- WEEK PAGE -->
+<div class="pg" id="pg-week">
+  <div class="wk-nav">
+    <button onclick="shiftWeek(-1)">◀ پچھلا</button>
+    <div class="wlbl" id="wklbl">یہ ہفتہ</div>
+    <button onclick="shiftWeek(1)">اگلا ▶</button>
+  </div>
+  <div id="week-body"></div>
+  <div class="toast" id="t2"></div>
+</div>
+
+<!-- SUMMARY PAGE -->
+<div class="pg" id="pg-sum">
+  <div class="sum-section-lbl">اس مہینے کا حساب</div>
+  <div class="stats-grid" id="sum-grid"></div>
+  <div class="bars-wrap" id="sum-bars"></div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>ڈھوڈی کی معلومات</h3>
+    <div class="modal-field">
+      <label>ڈھوڈی کا نام</label>
+      <input type="text" id="dhodi-inp" placeholder="مثلاً چودھری صاحب"/>
+    </div>
+    <div class="modal-field">
+      <label>فون نمبر (اختیاری)</label>
+      <input type="tel" id="dhodi-phone" placeholder="03XX XXXXXXX" inputmode="tel"/>
+    </div>
+    <div class="modal-btns">
+      <button class="ok" onclick="saveDhodi()">✓ محفوظ کریں</button>
+      <button class="cancel" onclick="closeModal()">منسوخ</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var data={}, cfg={price:120,dhodi:'',dphone:''};
+var curDate=new Date(), wkOff=0;
+var SK='doodh_v3', CK='doodh_cfg_v2';
+
+function dk(d){return d.toISOString().slice(0,10);}
+
+function wkMon(off){
+  var d=new Date(), day=d.getDay(), diff=day===0?6:day-1;
+  d.setDate(d.getDate()-diff+off*7);
+  d.setHours(0,0,0,0); return d;
+}
+
+function days7(off){
+  var s=wkMon(off), arr=[];
+  for(var i=0;i<7;i++){var d=new Date(s);d.setDate(s.getDate()+i);arr.push(dk(d));}
+  return arr;
+}
+
+var UD=['اتوار','پیر','منگل','بدھ','جمعرات','جمعہ','ہفتہ'];
+var UDS=['اتو','پیر','منگ','بدھ','جمع','جمع','ہفت'];
+
+function dow(ds){var p=ds.split('-');return new Date(+p[0],+p[1]-1,+p[2]).getDay();}
+function fd(ds){var p=ds.split('-');return p[2]+'/'+p[1];}
+
+function load(){
+  try{var r=localStorage.getItem(SK);if(r)data=JSON.parse(r);}catch(e){data={};}
+  try{var r=localStorage.getItem(CK);if(r)cfg=JSON.parse(r);}catch(e){}
+  document.getElementById('price-inp').value=cfg.price||120;
+  updateDhodiBtn();
+  renderDayLbl();
+  loadForm();
+  checkInstall();
+}
+
+function save(){try{localStorage.setItem(SK,JSON.stringify(data));}catch(e){}}
+function saveSettings(){
+  cfg.price=parseFloat(document.getElementById('price-inp').value)||120;
+  try{localStorage.setItem(CK,JSON.stringify(cfg));}catch(e){}
+  renderSum();
+}
+
+function getP(){return parseFloat(document.getElementById('price-inp').value)||cfg.price||120;}
+
+function calcPreview(){
+  var mq=parseFloat(document.getElementById('m-qty').value)||0;
+  var eq=parseFloat(document.getElementById('e-qty').value)||0;
+  var t=mq+eq;
+  var pb=document.getElementById('prev-bar');
+  if(t>0){
+    pb.style.display='flex';
+    document.getElementById('prev-qty').textContent=t.toFixed(1)+' لیٹر';
+    document.getElementById('prev-pkr').textContent='PKR '+Math.round(t*getP()).toLocaleString();
+  } else {pb.style.display='none';}
+}
+
+function renderDayLbl(){
+  var k=dk(curDate), td=dk(new Date());
+  var lbl=UD[dow(k)]+' | '+fd(k);
+  if(k===td) lbl='آج — '+UD[dow(k)];
+  else{var y=new Date();y.setDate(y.getDate()-1);if(k===dk(y))lbl='کل — '+UD[dow(k)];}
+  document.getElementById('dlbl').textContent=lbl;
+}
+
+function loadForm(){
+  var e=data[dk(curDate)];
+  document.getElementById('m-qty').value=e&&e.m?e.m:'';
+  document.getElementById('m-note').value=e&&e.mn?e.mn:'';
+  document.getElementById('e-qty').value=e&&e.e?e.e:'';
+  document.getElementById('e-note').value=e&&e.en?e.en:'';
+  calcPreview();
+}
+
+function shiftDay(d){
+  var nd=new Date(curDate); nd.setDate(nd.getDate()+d);
+  if(nd>new Date()){toast('t1','آج سے آگے نہیں جا سکتے');return;}
+  curDate=nd; renderDayLbl(); loadForm();
+}
+
+function saveDay(){
+  var mq=parseFloat(document.getElementById('m-qty').value)||0;
+  var eq=parseFloat(document.getElementById('e-qty').value)||0;
+  if(!mq&&!eq){toast('t1','⚠️ کم از کم ایک وقت کی مقدار لکھیں');return;}
+  var k=dk(curDate);
+  data[k]={m:mq,mn:document.getElementById('m-note').value,e:eq,en:document.getElementById('e-note').value,p:getP()};
+  save(); toast('t1','✅ محفوظ ہو گیا'); renderWeek(); renderSum();
+}
+
+function shiftWeek(d){
+  wkOff+=d; if(wkOff>0)wkOff=0; renderWeek();
+}
+
+function renderWeek(){
+  var days=days7(wkOff);
+  var s=wkMon(wkOff), en=new Date(s); en.setDate(s.getDate()+6);
+  var rng=fd(dk(s))+' — '+fd(dk(en));
+  document.getElementById('wklbl').textContent=wkOff===0?'یہ ہفتہ':rng;
+
+  var tL=0,tPKR=0;
+  var pKey='wp_'+days[0], isPaid=!!(data[pKey]&&data[pKey].paid);
+  var today=dk(new Date());
+
+  var rows=days.map(function(k){
+    var e=data[k], mq=e?e.m||0:0, eq=e?e.e||0:0, t=mq+eq;
+    tL+=t; tPKR+=t*(e?e.p||getP():getP());
+    var fut=k>today;
+    var isTod=k===today;
+    var mTxt=mq?mq.toFixed(1):'—', eTxt=eq?eq.toFixed(1):'—';
+    var tTxt=t?t.toFixed(1):'—';
+    var mCls='slot morning-slot'+(mq?'':' mt');
+    var eCls='slot evening-slot'+(eq?'':' mt');
+    return '<div class="day-row'+(isTod?' today':'')+'"'+(fut?' style="opacity:0.38"':'')+'>'+
+      '<div class="dname">'+UDS[dow(k)]+'<br><span class="ddate">'+fd(k)+'</span></div>'+
+      '<div class="slots">'+
+        '<div class="'+mCls+'"><div class="sv">'+mTxt+'</div><div class="sl">صبح</div></div>'+
+        '<div class="'+eCls+'"><div class="sv">'+eTxt+'</div><div class="sl">شام</div></div>'+
+      '</div>'+
+      '<div class="dtotal'+(t?'':' mt')+'">'+tTxt+(t?' L':'')+'</div>'+
+    '</div>';
+  }).join('');
+
+  document.getElementById('week-body').innerHTML=
+    '<div class="wk-card">'+
+      '<div class="wk-top">'+
+        '<div><div class="wt">'+(wkOff===0?'یہ ہفتہ — کل دودھ':rng)+'</div><div class="wl"><span>کل</span>'+tL.toFixed(1)+' L</div></div>'+
+        '<div style="text-align:left"><div class="wt">کل رقم</div><div class="wl" style="font-size:18px">PKR '+Math.round(tPKR).toLocaleString()+'</div></div>'+
+      '</div>'+
+      '<div class="col-hdr"><div class="chd">دن</div><div class="chs"><div class="chs-item">صبح (L)</div><div class="chs-item">شام (L)</div></div><div class="cht">مجموعہ</div></div>'+
+      rows+
+      '<div class="wk-foot">'+
+        '<div>'+
+          '<div class="fl">'+(isPaid?'ادائیگی کی تاریخ':'ادائیگی باقی ہے')+'</div>'+
+          '<div class="fv">PKR '+Math.round(tPKR).toLocaleString()+'</div>'+
+        '</div>'+
+        '<button class="paid-btn'+(isPaid?' paid':'')+'\" onclick=\"togglePaid(\''+days[0]+'\')">'+
+          (isPaid?'✅ ادائیگی ہو گئی':'💰 ادائیگی نشان زد کریں')+
+        '</button>'+
+      '</div>'+
+    '</div>';
+}
+
+function togglePaid(fd){
+  var k='wp_'+fd, cur=!!(data[k]&&data[k].paid);
+  data[k]={paid:!cur}; save(); renderWeek();
+  toast('t2',!cur?'✅ ادائیگی مکمل ہو گئی':'ادائیگی ہٹا دی گئی');
+}
+
+function renderSum(){
+  var keys=Object.keys(data).filter(function(k){return !k.startsWith('wp_');});
+  var now=new Date(), mStart=new Date(now.getFullYear(),now.getMonth(),1);
+  var mKeys=keys.filter(function(k){return new Date(k)>=mStart;});
+  var tL=0,tPKR=0,mL=0,eL=0,days=mKeys.length;
+  mKeys.forEach(function(k){var e=data[k];if(!e)return;var m=e.m||0,ev=e.e||0;mL+=m;eL+=ev;tL+=m+ev;tPKR+=(m+ev)*(e.p||getP());});
+
+  document.getElementById('sum-grid').innerHTML=
+    '<div class="sc green"><div class="sl">🥛 اس مہینے کل دودھ</div><div class="sv">'+tL.toFixed(1)+' L</div><div class="ss">'+days+' دنوں کا ریکارڈ</div></div>'+
+    '<div class="sc amber"><div class="sl">💰 اس مہینے کل رقم</div><div class="sv">'+Math.round(tPKR).toLocaleString()+'</div><div class="ss">PKR @ '+getP()+'/L</div></div>'+
+    '<div class="sc blue"><div class="sl">☀️ صبح کا دودھ</div><div class="sv">'+mL.toFixed(1)+' L</div><div class="ss">'+(tL?Math.round(mL/tL*100)+'%':'0%')+' کل کا حصہ</div></div>'+
+    '<div class="sc gray"><div class="sl">🌙 شام کا دودھ</div><div class="sv">'+eL.toFixed(1)+' L</div><div class="ss">'+(tL?Math.round(eL/tL*100)+'%':'0%')+' کل کا حصہ</div></div>';
+
+  var todayKey=dk(new Date());
+  var last7=Object.keys(data).filter(function(k){return !k.startsWith('wp_');}).sort().slice(-7);
+  var sb=document.getElementById('sum-bars');
+  if(!last7.length){sb.innerHTML='<div class="bars-title">📊 پچھلے 7 دن</div><div style="text-align:center;padding:30px 0;color:#aaa;font-size:14px">ابھی کوئی ڈیٹا نہیں<br><span style="font-size:12px">پہلے آج کا ریکارڈ درج کریں</span></div>';return;}
+  var maxQ=Math.max.apply(null,last7.map(function(k){var e=data[k];return (e?e.m||0:0)+(e?e.e||0:0);}));
+  if(!maxQ)maxQ=1;
+  var barHTML=last7.map(function(k){
+    var e=data[k], m=e?e.m||0:0, ev=e?e.e||0:0, t=m+ev;
+    var mh=Math.max(Math.round((m/maxQ)*82),m?3:0), eh=Math.max(Math.round((ev/maxQ)*82),ev?3:0);
+    var isTod=k===todayKey;
+    return '<div class="bar-col'+(isTod?' today-col':'')+'" style="'+(isTod?'opacity:1':'opacity:0.85')+'">'+
+      '<div class="bv">'+(t?t.toFixed(1):'')+'</div>'+
+      '<div class="bstack"><div class="bm" style="height:'+mh+'px"></div><div class="be" style="height:'+eh+'px"></div></div>'+
+      '<div class="bn">'+UDS[dow(k)]+'</div>'+
+    '</div>';
+  }).join('');
+  sb.innerHTML='<div class="bars-title">📊 پچھلے 7 دن</div><div class="bars">'+barHTML+'</div>'+
+    '<div class="legend"><span><span class="dot dot-m"></span> صبح کا دودھ</span><span><span class="dot dot-e"></span> شام کا دودھ</span></div>';
+}
+
+function go(p){
+  ['add','week','sum'].forEach(function(x){
+    document.getElementById('pg-'+x).classList.toggle('on',x===p);
+    var ti=x;
+    document.getElementById('tab-'+ti).classList.toggle('on',x===p);
+  });
+  if(p==='week')renderWeek();
+  if(p==='sum')renderSum();
+}
+
+function toast(id,msg){
+  var t=document.getElementById(id); if(!t)return;
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2600);
+}
+
+function openModal(){
+  document.getElementById('dhodi-inp').value=cfg.dhodi||'';
+  document.getElementById('dhodi-phone').value=cfg.dphone||'';
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){document.getElementById('overlay').classList.remove('show');}
+
+function saveDhodi(){
+  cfg.dhodi=document.getElementById('dhodi-inp').value.trim();
+  cfg.dphone=document.getElementById('dhodi-phone').value.trim();
+  try{localStorage.setItem(CK,JSON.stringify(cfg));}catch(e){}
+  updateDhodiBtn(); closeModal();
+}
+
+function updateDhodiBtn(){
+  document.getElementById('dhodi-btn').textContent='✏️ '+(cfg.dhodi?cfg.dhodi:'ڈھوڈی');
+}
+
+function checkInstall(){
+  var isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
+  if(!isStandalone&&!localStorage.getItem('banner_dismissed')){
+    document.getElementById('install-banner').style.display='block';
+  }
+}
+
+function dismissBanner(){
+  document.getElementById('install-banner').style.display='none';
+  try{localStorage.setItem('banner_dismissed','1');}catch(e){}
+}
+
+document.getElementById('overlay').addEventListener('click',function(ev){if(ev.target===this)closeModal();});
+
+load();
+</script>
+</body>
+</html>
